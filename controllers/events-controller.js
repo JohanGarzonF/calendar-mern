@@ -17,11 +17,11 @@ const createEvent = async ( req, res = response ) => {
 
     try {
         event.user = req.uid
-        const saveEvent = await event.save()
+        const savedEvent = await event.save()
 
         res.status(201).json({
             ok: true,
-            saveEvent,
+            savedEvent,
             msg: 'Evento creado exitosamente'
         })
 
@@ -50,7 +50,7 @@ const updateEvent = async ( req, res = response ) => {
         }
 
         if ( event.user.toString() !== uid ) {
-            res.status( 401 ).json({
+            return res.status( 401 ).json({
                 ok: false,
                 msg: "No tiene privilegio de editar este evento"
             })
@@ -92,7 +92,7 @@ const deleteEvent = async ( req, res = response ) => {
         }
 
         if ( event.user.toString() !== req.uid ) {
-            res.status( 401 ).json({
+            return res.status( 401 ).json({
                 ok: false,
                 msg: "No tiene privilegio de editar este evento"
             })
